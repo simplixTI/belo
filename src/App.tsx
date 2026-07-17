@@ -47,7 +47,7 @@ function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
         <a href="#top" className="flex items-center gap-3">
           <img
-            src="/logo.png"
+            src="/logo.png?v=2"
             alt="BELO'S MUSIC"
             className="h-11 w-auto object-contain"
           />
@@ -195,7 +195,7 @@ function Hero() {
             </span>
             <div className="my-auto flex flex-col items-center gap-2">
               <img
-                src="/logo.png"
+                src="/logo.png?v=2"
                 alt="BELO'S MUSIC — Selo Musical"
                 className="h-40 w-auto max-w-full animate-drift object-contain sm:h-64 md:h-72"
               />
@@ -772,7 +772,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-6 lg:px-10">
         <div className="flex flex-col items-center gap-6 text-center">
           <img
-            src="/logo.png"
+            src="/logo.png?v=2"
             alt="BELO'S MUSIC"
             className="h-28 w-auto object-contain"
           />
