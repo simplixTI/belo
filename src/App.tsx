@@ -19,9 +19,11 @@ import {
   Youtube,
   Send,
 } from 'lucide-react'
-import { AudioWave, CountdownBox, Monogram, Ornament, Particles } from './effects'
+import { AudioWave, CountdownBox, Ornament, Particles } from './effects'
 
 const EVENT_DATE = new Date('2026-07-21T14:00:00-03:00')
+const INSCRICAO_ENDPOINT =
+  'https://script.google.com/macros/s/AKfycbzu0jP8TUwZX7PsQmBRJVredrBlrjmVscWUs4JmCMYXdKnZXWrbzT090mk-Q6D32jN6Xw/exec'
 
 /* ─────────────────────────── Header ─────────────────────────── */
 
@@ -44,10 +46,11 @@ function Header() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
         <a href="#top" className="flex items-center gap-3">
-          <Monogram size={40} />
-          <span className="hidden font-display text-sm font-semibold tracking-widest2 text-ivory sm:block">
-            BELO<span className="text-gold">'</span>S <span className="gold-text">MUSIC</span>
-          </span>
+          <img
+            src="/logo.png"
+            alt="BELO'S MUSIC"
+            className="h-11 w-auto object-contain"
+          />
         </a>
         <nav className="hidden items-center gap-10 md:flex">
           {[
@@ -125,7 +128,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.4 }}
-            className="mt-8 max-w-xl font-serif text-lg leading-relaxed text-ivory/70 sm:text-xl"
+            className="mt-8 max-w-xl font-sans text-lg leading-relaxed text-ivory/70 sm:text-xl"
           >
             A <span className="text-gold-light">BELO'S MUSIC</span> nasce para descobrir talentos,
             desenvolver carreiras e conectar artistas às melhores oportunidades do mercado.
@@ -143,7 +146,7 @@ function Hero() {
             </a>
             <div className="flex items-center gap-3 text-sm text-ivory/70">
               <span className="text-lg">🎟</span>
-              <span className="font-serif italic">
+              <span className="font-sans italic">
                 Apenas <span className="text-gold-light">300 convidados</span> serão selecionados.
               </span>
             </div>
@@ -190,14 +193,12 @@ function Hero() {
             <span className="absolute right-6 top-6 font-display text-[10px] uppercase tracking-widest2 text-gold-light/70">
               MMXXVI
             </span>
-            <div className="my-auto flex flex-col items-center gap-4">
-              <Monogram size={180} className="animate-drift" />
-              <span className="mt-2 font-display text-xs uppercase tracking-widest3 text-gold-light">
-                Belo<span className="text-ivory">'</span>s Music
-              </span>
-              <span className="font-serif text-sm italic text-ivory/55">
-                Selo · Editora · Estúdio
-              </span>
+            <div className="my-auto flex flex-col items-center gap-2">
+              <img
+                src="/logo.png"
+                alt="BELO'S MUSIC — Selo Musical"
+                className="h-64 w-auto max-w-full animate-drift object-contain sm:h-72"
+              />
             </div>
             <AudioWave count={36} className="mt-4 w-full" />
           </div>
@@ -291,7 +292,7 @@ function Services() {
             <br />
             <span className="italic gold-text">selo musical.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl font-serif text-lg text-ivory/65 sm:text-xl">
+          <p className="mx-auto mt-6 max-w-2xl font-sans text-lg text-ivory/65 sm:text-xl">
             A BELO'S MUSIC foi criada para impulsionar artistas em todas as etapas da carreira — do
             desenvolvimento artístico à distribuição da música, produção, marketing e gestão.
           </p>
@@ -322,7 +323,7 @@ function Services() {
                   <h3 className="font-display text-lg font-semibold tracking-widest2 text-ivory">
                     {s.title.toUpperCase()}
                   </h3>
-                  <p className="font-serif text-base leading-relaxed text-ivory/60 sm:text-lg">
+                  <p className="font-sans text-base leading-relaxed text-ivory/60 sm:text-lg">
                     {s.desc}
                   </p>
                   <span className="absolute inset-x-8 bottom-0 h-px bg-gold-line opacity-0 transition group-hover:opacity-70" />
@@ -369,7 +370,7 @@ function EventHighlights() {
             <br />
             <span className="italic gold-text">no evento.</span>
           </h2>
-          <p className="mt-6 max-w-md font-serif text-lg text-ivory/60">
+          <p className="mt-6 max-w-md font-sans text-lg text-ivory/60">
             Uma tarde curada para reunir a nova geração da música brasileira. Uma experiência
             imersiva onde artistas, produtores e curadores se encontram pela primeira vez.
           </p>
@@ -423,7 +424,7 @@ function Why() {
             O primeiro encontro oficial da BELO'S MUSIC é para{' '}
             <span className="italic gold-text">artistas que desejam crescer de verdade.</span>
           </h2>
-          <p className="mx-auto mt-8 max-w-2xl font-serif text-lg text-ivory/65 sm:text-xl">
+          <p className="mx-auto mt-8 max-w-2xl font-sans text-lg text-ivory/65 sm:text-xl">
             Uma oportunidade única de conhecer o projeto, fazer networking e descobrir tudo o que a
             BELO'S MUSIC preparou para o mercado.
           </p>
@@ -495,7 +496,7 @@ function Exclusivity() {
               <h3 className="mt-4 font-serif text-2xl leading-snug text-ivory sm:text-3xl">
                 As vagas são extremamente limitadas.
               </h3>
-              <p className="mt-4 max-w-3xl font-serif text-base leading-relaxed text-ivory/70 sm:text-lg">
+              <p className="mt-4 max-w-3xl font-sans text-base leading-relaxed text-ivory/70 sm:text-lg">
                 Após o encerramento das inscrições, nossa equipe fará uma seleção e escolherá{' '}
                 <span className="text-gold-light">300 participantes</span> para estarem presentes no
                 evento. O preenchimento do cadastro não garante a participação. Os selecionados
@@ -554,7 +555,7 @@ function Countdown() {
           <h2 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-light leading-tight text-ivory sm:text-5xl md:text-6xl">
             21 de Julho <span className="italic gold-text">·</span> 14h
           </h2>
-          <p className="mt-4 font-serif text-lg italic text-ivory/55">
+          <p className="mt-4 font-sans text-lg italic text-ivory/55">
             O momento em que a nova era começa.
           </p>
         </motion.div>
@@ -602,10 +603,25 @@ function maskCPF(v: string) {
 function Registration() {
   const [form, setForm] = useState({ nome: '', cpf: '', tel: '', email: '' })
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault()
-    setSent(true)
+    setError(null)
+    setSubmitting(true)
+    try {
+      await fetch(INSCRICAO_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(form),
+      })
+      setSent(true)
+    } catch {
+      setError('Não foi possível enviar sua inscrição. Tente novamente em instantes.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -627,7 +643,7 @@ function Registration() {
           <h2 className="mt-6 font-serif text-4xl font-light leading-tight text-ivory sm:text-5xl md:text-6xl">
             Garanta sua <span className="italic gold-text">inscrição.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-xl font-serif text-lg text-ivory/65">
+          <p className="mx-auto mt-6 max-w-xl font-sans text-lg text-ivory/65">
             Preencha seus dados abaixo para participar da seleção. Nossa equipe analisará todas as
             inscrições e os 300 selecionados serão avisados por e-mail e WhatsApp.
           </p>
@@ -657,7 +673,7 @@ function Registration() {
                 <h3 className="font-serif text-3xl leading-tight text-ivory sm:text-4xl">
                   Sua inscrição foi <span className="italic gold-text">recebida com sucesso.</span>
                 </h3>
-                <p className="max-w-lg font-serif text-lg text-ivory/70">
+                <p className="max-w-lg font-sans text-lg text-ivory/70">
                   Caso seja selecionado, entraremos em contato através do e-mail e WhatsApp
                   informados. Fique atento à sua caixa de entrada.
                 </p>
@@ -724,9 +740,17 @@ function Registration() {
                     placeholder="seunome@dominio.com"
                   />
                 </div>
-                <button type="submit" className="btn-gold mt-4 w-full">
-                  Quero Participar da Seleção <ArrowRight size={16} />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-gold mt-4 w-full disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {submitting ? 'Enviando...' : 'Quero Participar da Seleção'}
+                  {!submitting && <ArrowRight size={16} />}
                 </button>
+                {error && (
+                  <p className="mt-1 text-center text-sm text-red-400">{error}</p>
+                )}
                 <p className="mt-2 text-center text-[11px] italic text-ivory/45">
                   Ao enviar, você concorda em receber contato via e-mail e WhatsApp caso seja
                   selecionado.
@@ -747,12 +771,13 @@ function Footer() {
     <footer className="relative overflow-hidden border-t border-gold/15 bg-night pt-24 pb-10">
       <div className="mx-auto max-w-6xl px-6 lg:px-10">
         <div className="flex flex-col items-center gap-6 text-center">
-          <Monogram size={72} />
-          <span className="font-display text-xl tracking-widest2 text-ivory sm:text-2xl">
-            BELO<span className="text-gold">'</span>S <span className="gold-text">MUSIC</span>
-          </span>
+          <img
+            src="/logo.png"
+            alt="BELO'S MUSIC"
+            className="h-28 w-auto object-contain"
+          />
           <Ornament className="h-4 w-64" />
-          <p className="max-w-lg font-serif italic text-ivory/60">
+          <p className="max-w-lg font-sans italic text-ivory/60">
             Selo Musical · Editora · Marketing · Gestão Artística · Produção
           </p>
           <div className="flex items-center gap-6 pt-2">

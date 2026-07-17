@@ -18,7 +18,7 @@ export default {
       fontFamily: {
         display: ['"Bebas Neue"', 'Impact', 'sans-serif'],
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"Fraunces"', 'Georgia', 'serif'],
+        sans: ['"Poppins"', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         widest2: '0.35em',
