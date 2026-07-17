@@ -85,7 +85,7 @@ function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen w-full items-center overflow-hidden pt-24 grain"
+      className="relative flex min-h-screen w-full items-center overflow-hidden pt-20 sm:pt-24 grain"
     >
       <motion.div
         style={{ y: parallax }}
@@ -97,7 +97,7 @@ function Hero() {
       </div>
       <Particles density={70} />
 
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-14 px-6 pb-24 pt-10 lg:grid-cols-[1.15fr_.85fr] lg:px-10">
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 px-5 pb-14 pt-4 sm:gap-14 sm:px-6 sm:pb-20 sm:pt-10 lg:grid-cols-[1.15fr_.85fr] lg:px-10">
         <div className="relative z-10 flex flex-col">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -186,7 +186,7 @@ function Hero() {
             <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial-glow blur-2xl" />
           </div>
 
-          <div className="glass relative flex aspect-square w-full max-w-md flex-col items-center justify-between p-8 sm:p-10">
+          <div className="glass relative flex aspect-square w-full max-w-md flex-col items-center justify-between p-5 sm:p-10">
             <span className="absolute left-6 top-6 font-display text-[10px] uppercase tracking-widest2 text-gold-light/70">
               N.º 001
             </span>
@@ -197,7 +197,7 @@ function Hero() {
               <img
                 src="/logo.png"
                 alt="BELO'S MUSIC — Selo Musical"
-                className="h-64 w-auto max-w-full animate-drift object-contain sm:h-72"
+                className="h-40 w-auto max-w-full animate-drift object-contain sm:h-64 md:h-72"
               />
             </div>
             <AudioWave count={36} className="mt-4 w-full" />
@@ -224,7 +224,7 @@ function Marquee() {
       <div className="flex w-max marquee-track items-center gap-14 whitespace-nowrap">
         {track.map((t, i) => (
           <div key={i} className="flex items-center gap-14">
-            <span className="font-serif text-3xl italic text-ivory/70 sm:text-4xl">{t}</span>
+            <span className="font-serif text-xl italic text-ivory/70 sm:text-3xl md:text-4xl">{t}</span>
             <Star size={12} className="text-gold" />
           </div>
         ))}
@@ -276,7 +276,7 @@ const services = [
 
 function Services() {
   return (
-    <section id="selo" className="relative overflow-hidden py-32 lg:py-40">
+    <section id="selo" className="relative overflow-hidden py-20 sm:py-28 lg:py-40">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-obsidian to-transparent" />
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <motion.div
@@ -310,7 +310,7 @@ function Services() {
                 transition={{ duration: 0.7, delay: i * 0.08 }}
                 className="group relative overflow-hidden"
               >
-                <div className="glass relative flex h-full flex-col gap-6 p-8 transition-all duration-500 group-hover:border-gold/50">
+                <div className="glass relative flex h-full flex-col gap-5 p-6 transition-all duration-500 group-hover:border-gold/50 sm:gap-6 sm:p-8">
                   <span className="absolute inset-x-8 top-0 h-px bg-gold-line opacity-40 transition group-hover:opacity-100" />
                   <div className="flex items-start justify-between">
                     <div className="relative flex h-14 w-14 items-center justify-center border border-gold/25 bg-obsidian/60 transition group-hover:border-gold group-hover:shadow-gold">
@@ -352,7 +352,7 @@ function EventHighlights() {
   return (
     <section
       id="evento"
-      className="relative overflow-hidden border-y border-gold/10 bg-night py-32 lg:py-40 grain"
+      className="relative overflow-hidden border-y border-gold/10 bg-night py-20 sm:py-28 lg:py-40 grain"
     >
       <div className="mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-10">
         <motion.div
@@ -411,7 +411,7 @@ function EventHighlights() {
 
 function Why() {
   return (
-    <section className="relative overflow-hidden py-32 lg:py-40">
+    <section className="relative overflow-hidden py-20 sm:py-28 lg:py-40">
       <div className="mx-auto max-w-6xl px-6 text-center lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -444,7 +444,7 @@ function Why() {
               transition={{ duration: 0.7, delay: i * 0.12 }}
               className="relative flex flex-col items-center"
             >
-              <span className="font-serif text-[8rem] font-light leading-none tracking-tighter gold-text sm:text-[10rem]">
+              <span className="font-serif text-[5rem] font-light leading-none tracking-tighter gold-text sm:text-[8rem] md:text-[10rem]">
                 {n.value}
               </span>
               <span className="mt-2 font-display text-[10px] uppercase tracking-widest2 text-ivory/55 sm:text-xs">
@@ -463,14 +463,14 @@ function Why() {
 
 function Exclusivity() {
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32">
+    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-32">
       <div className="mx-auto max-w-5xl px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="relative overflow-hidden border border-gold/40 bg-gradient-to-br from-[#1a1408] via-[#0f0c05] to-[#0a0703] p-10 sm:p-14"
+          className="relative overflow-hidden border border-gold/40 bg-gradient-to-br from-[#1a1408] via-[#0f0c05] to-[#0a0703] p-6 sm:p-10 md:p-14"
         >
           <span className="absolute left-4 top-4 h-6 w-6 border-l border-t border-gold/70" />
           <span className="absolute right-4 top-4 h-6 w-6 border-r border-t border-gold/70" />
@@ -539,7 +539,7 @@ function useCountdown(target: Date) {
 function Countdown() {
   const c = useCountdown(EVENT_DATE)
   return (
-    <section id="countdown" className="relative overflow-hidden py-32 lg:py-40">
+    <section id="countdown" className="relative overflow-hidden py-20 sm:py-28 lg:py-40">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/2 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial-glow blur-3xl" />
       </div>
@@ -625,7 +625,7 @@ function Registration() {
   }
 
   return (
-    <section id="inscricao" className="relative overflow-hidden py-32 lg:py-40">
+    <section id="inscricao" className="relative overflow-hidden py-20 sm:py-28 lg:py-40">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/4 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-radial-glow blur-3xl" />
       </div>
@@ -657,11 +657,11 @@ function Registration() {
           className="relative mt-14"
         >
           <div className="absolute -inset-1 bg-gradient-to-b from-gold/40 via-gold/5 to-gold/30 opacity-70 blur-lg" />
-          <div className="glass-strong relative p-8 shadow-gold-lg sm:p-12">
-            <span className="absolute left-6 top-0 -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light">
+          <div className="glass-strong relative p-6 shadow-gold-lg sm:p-8 md:p-12">
+            <span className="absolute left-4 top-0 -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light sm:left-6">
               Formulário Oficial
             </span>
-            <span className="absolute right-6 top-0 -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light">
+            <span className="absolute right-4 top-0 hidden -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light sm:right-6 sm:inline">
               MMXXVI · N.º 001
             </span>
 
