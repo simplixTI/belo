@@ -588,7 +588,7 @@ function Registration() {
     if (!mount) return
     if (mount.querySelector('script[data-belos-embed]')) return
     const script = document.createElement('script')
-    script.src = 'https://belosmusic.com.br/embed-leads.js'
+    script.src = 'https://alfredodobelo.com.br/embed-leads.js'
     script.async = true
     script.setAttribute('data-tenant', 'alfredo-do-belo')
     script.setAttribute('data-belos-embed', '')
