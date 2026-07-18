@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   ArrowRight,
@@ -14,12 +14,16 @@ import {
   Clapperboard,
   Star,
   ShieldAlert,
+  Check,
+  Sparkles,
   Instagram,
   Pause,
 } from 'lucide-react'
 import { AudioWave, CountdownBox, Ornament, Particles } from './effects'
 
 const EVENT_DATE = new Date('2026-07-21T14:00:00-03:00')
+const INSCRICAO_ENDPOINT =
+  'https://script.google.com/macros/s/AKfycbzu0jP8TUwZX7PsQmBRJVredrBlrjmVscWUs4JmCMYXdKnZXWrbzT090mk-Q6D32jN6Xw/exec'
 
 /* ─────────────────────────── Header ─────────────────────────── */
 
@@ -584,18 +588,43 @@ function Countdown() {
 
 /* ─────────────────────────── Registration ─────────────────────────── */
 
+function maskPhone(v: string) {
+  const d = v.replace(/\D/g, '').slice(0, 11)
+  if (d.length <= 2) return d
+  if (d.length <= 7) return `(${d.slice(0, 2)}) ${d.slice(2)}`
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
+}
+function maskCPF(v: string) {
+  const d = v.replace(/\D/g, '').slice(0, 11)
+  return d
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+}
+
 function Registration() {
-  useEffect(() => {
-    const mount = document.getElementById('belos-embed-mount')
-    if (!mount) return
-    if (mount.querySelector('script[data-belos-embed]')) return
-    const script = document.createElement('script')
-    script.src = 'https://alfredodobelo.com.br/embed-leads.js'
-    script.async = true
-    script.setAttribute('data-tenant', 'alfredo-do-belo')
-    script.setAttribute('data-belos-embed', '')
-    mount.appendChild(script)
-  }, [])
+  const [form, setForm] = useState({ nome: '', cpf: '', tel: '', email: '' })
+  const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault()
+    setError(null)
+    setSubmitting(true)
+    try {
+      await fetch(INSCRICAO_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(form),
+      })
+      setSent(true)
+    } catch {
+      setError('Não foi possível enviar sua inscrição. Tente novamente em instantes.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <section id="inscricao" className="relative overflow-hidden py-20 sm:py-28 lg:py-40">
@@ -637,7 +666,100 @@ function Registration() {
             <span className="absolute right-4 top-0 hidden -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light sm:right-6 sm:inline">
               MMXXVI · N.º 001
             </span>
-            <div id="belos-embed-mount" className="min-h-[420px] w-full" />
+
+            {sent ? (
+              <div className="flex flex-col items-center gap-5 py-6 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/50 bg-obsidian/60 shadow-gold">
+                  <Check size={26} className="text-gold-light" />
+                </div>
+                <h3 className="font-serif text-3xl leading-tight text-ivory sm:text-4xl">
+                  Sua inscrição foi <span className="italic gold-text">recebida com sucesso.</span>
+                </h3>
+                <p className="max-w-lg font-sans text-lg text-ivory/70">
+                  Caso seja selecionado, entraremos em contato pelo e-mail oficial da BELO'S MUSIC e
+                  pelo WhatsApp informados. Fique atento à sua caixa de entrada — inclusive a pasta
+                  de spam.
+                </p>
+                <div className="mt-4 flex items-center gap-3 text-gold-light">
+                  <Sparkles size={18} />
+                  <span className="font-display text-xs uppercase tracking-widest2">
+                    Boa sorte na seleção
+                  </span>
+                  <Sparkles size={18} />
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={submit} className="grid gap-5">
+                <div className="grid gap-2">
+                  <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                    Nome Completo
+                  </label>
+                  <input
+                    className="field"
+                    required
+                    value={form.nome}
+                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                    placeholder="Como aparece no seu documento"
+                  />
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="grid gap-2">
+                    <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                      CPF
+                    </label>
+                    <input
+                      className="field"
+                      required
+                      inputMode="numeric"
+                      value={form.cpf}
+                      onChange={(e) => setForm({ ...form, cpf: maskCPF(e.target.value) })}
+                      placeholder="000.000.000-00"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                      Telefone
+                    </label>
+                    <input
+                      className="field"
+                      required
+                      inputMode="tel"
+                      value={form.tel}
+                      onChange={(e) => setForm({ ...form, tel: maskPhone(e.target.value) })}
+                      placeholder="(21) 90000-0000"
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                    E-mail
+                  </label>
+                  <input
+                    className="field"
+                    required
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="seunome@dominio.com"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-gold mt-4 w-full disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {submitting ? 'Enviando...' : 'Quero Participar da Seleção'}
+                  {!submitting && <ArrowRight size={16} />}
+                </button>
+                {error && (
+                  <p className="mt-1 text-center text-sm text-red-400">{error}</p>
+                )}
+                <p className="mt-2 text-center text-[11px] italic text-ivory/45">
+                  Ao enviar, você concorda em receber contato via e-mail oficial e WhatsApp caso
+                  seja selecionado.
+                </p>
+              </form>
+            )}
           </div>
         </motion.div>
       </div>
