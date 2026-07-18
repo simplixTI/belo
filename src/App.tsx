@@ -496,8 +496,10 @@ function Exclusivity() {
                 Após o encerramento das inscrições, nossa equipe fará uma seleção e escolherá{' '}
                 <span className="text-gold-light">300 participantes</span> para estarem presentes no
                 evento. O preenchimento do cadastro não garante a participação. Os selecionados
-                receberão confirmação através do <span className="text-gold-light">e-mail</span> e{' '}
-                <span className="text-gold-light">WhatsApp</span> cadastrados.
+                receberão confirmação exclusivamente pelo{' '}
+                <span className="text-gold-light">e-mail oficial da BELO'S MUSIC</span> e pelo{' '}
+                <span className="text-gold-light">WhatsApp</span> cadastrado. Fique atento à sua
+                caixa de entrada — inclusive a pasta de spam.
               </p>
             </div>
           </div>
@@ -616,7 +618,7 @@ function Registration() {
           </h2>
           <p className="mx-auto mt-6 max-w-xl font-sans text-lg text-ivory/65">
             Preencha seus dados abaixo para participar da seleção. Nossa equipe analisará todas as
-            inscrições e os 300 selecionados serão avisados por e-mail e WhatsApp.
+            inscrições e os 300 selecionados serão avisados pelo e-mail oficial da BELO'S MUSIC e WhatsApp.
           </p>
         </motion.div>
 
