@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   ArrowRight,
@@ -6,6 +6,7 @@ import {
   Calendar,
   Clock,
   Mic2,
+  Music2,
   Music4,
   TrendingUp,
   Handshake,
@@ -16,6 +17,7 @@ import {
   Instagram,
   Youtube,
   Send,
+  Pause,
 } from 'lucide-react'
 import { AudioWave, CountdownBox, Ornament, Particles } from './effects'
 
@@ -663,9 +665,11 @@ function Footer() {
           </p>
           <div className="flex items-center gap-6 pt-2">
             <a
-              href="#"
+              href="https://www.instagram.com/belosmusic"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex h-10 w-10 items-center justify-center border border-gold/25 text-gold-light transition hover:border-gold hover:bg-gold/10"
-              aria-label="Instagram"
+              aria-label="Instagram da BELO'S MUSIC"
             >
               <Instagram size={16} />
             </a>
@@ -699,6 +703,89 @@ function Footer() {
   )
 }
 
+/* ─────────────────────────── Music Player ─────────────────────────── */
+
+function MusicPlayer() {
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const [playing, setPlaying] = useState(false)
+  const [hinted, setHinted] = useState(false)
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.volume = 0.35
+
+    // First user gesture unmutes + plays. Autoplay policy: browsers
+    // allow silent programmatic play, but audible playback requires
+    // a user interaction — so we start on the first gesture.
+    const onFirstGesture = () => {
+      audio.muted = false
+      audio.play().then(() => setPlaying(true)).catch(() => {})
+      window.removeEventListener('click', onFirstGesture)
+      window.removeEventListener('touchstart', onFirstGesture)
+      window.removeEventListener('scroll', onFirstGesture)
+      window.removeEventListener('keydown', onFirstGesture)
+    }
+    window.addEventListener('click', onFirstGesture, { once: true })
+    window.addEventListener('touchstart', onFirstGesture, { once: true })
+    window.addEventListener('scroll', onFirstGesture, { once: true })
+    window.addEventListener('keydown', onFirstGesture, { once: true })
+
+    // Nudge the user visually a couple seconds in if they haven't interacted
+    const t = window.setTimeout(() => setHinted(true), 2500)
+
+    return () => {
+      window.clearTimeout(t)
+      window.removeEventListener('click', onFirstGesture)
+      window.removeEventListener('touchstart', onFirstGesture)
+      window.removeEventListener('scroll', onFirstGesture)
+      window.removeEventListener('keydown', onFirstGesture)
+    }
+  }, [])
+
+  const toggle = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (audio.paused) {
+      audio.muted = false
+      audio.play().then(() => setPlaying(true)).catch(() => {})
+    } else {
+      audio.pause()
+      setPlaying(false)
+    }
+  }
+
+  return (
+    <>
+      <audio ref={audioRef} src="/bg-music.mp3" loop preload="metadata" />
+      <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3 sm:bottom-6 sm:right-6">
+        {!playing && hinted && (
+          <span className="glass rounded-full px-3 py-1.5 font-display text-[10px] uppercase tracking-widest2 text-gold-light animate-pulseGlow hidden sm:inline-block">
+            Ativar trilha
+          </span>
+        )}
+        <button
+          onClick={toggle}
+          aria-label={playing ? 'Pausar trilha sonora' : 'Ativar trilha sonora'}
+          className="group relative flex h-12 w-12 items-center justify-center rounded-full border border-gold/50 bg-obsidian/80 text-gold-light shadow-gold backdrop-blur-md transition hover:border-gold hover:bg-gold/10 sm:h-14 sm:w-14"
+        >
+          {playing ? (
+            <Pause size={18} className="fill-gold-light" />
+          ) : (
+            <Music2 size={18} />
+          )}
+          {playing && (
+            <>
+              <span className="pointer-events-none absolute inset-0 rounded-full border border-gold/40 animate-ping" />
+              <span className="pointer-events-none absolute -inset-1 rounded-full bg-gold/10 blur-md animate-pulseGlow" />
+            </>
+          )}
+        </button>
+      </div>
+    </>
+  )
+}
+
 /* ─────────────────────────── App ─────────────────────────── */
 
 export default function App() {
@@ -714,6 +801,7 @@ export default function App() {
       <Countdown />
       <Registration />
       <Footer />
+      <MusicPlayer />
     </div>
   )
 }
