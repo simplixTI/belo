@@ -157,7 +157,7 @@ function Hero() {
             {[
               [<Calendar size={16} key="c" />, '21 · JUL', 'Data do evento'],
               [<Clock size={16} key="h" />, '14h', 'A partir das'],
-              [<MapPin size={16} key="m" />, 'BATUQ', 'Penha · RJ'],
+              [<MapPin size={16} key="m" />, 'SECRETO', 'Revelado ao selecionado'],
             ].map(([icon, big, small], i) => (
               <div key={i} className="flex flex-col gap-2">
                 <span className="flex items-center gap-2 text-gold">{icon}</span>
@@ -685,7 +685,7 @@ function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-gold/10 pt-8 text-[11px] uppercase tracking-widest2 text-ivory/45 sm:flex-row">
-          <span>Penha · Rio de Janeiro</span>
+          <span>Rio de Janeiro</span>
           <span>© MMXXVI · Todos os direitos reservados</span>
           <span className="flex items-center gap-2">
             <span className="h-px w-6 bg-gold/50" />
