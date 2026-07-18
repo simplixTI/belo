@@ -15,8 +15,6 @@ import {
   Star,
   ShieldAlert,
   Instagram,
-  Youtube,
-  Send,
   Pause,
 } from 'lucide-react'
 import { AudioWave, CountdownBox, Ornament, Particles } from './effects'
@@ -672,20 +670,6 @@ function Footer() {
               aria-label="Instagram da BELO'S MUSIC"
             >
               <Instagram size={16} />
-            </a>
-            <a
-              href="#"
-              className="flex h-10 w-10 items-center justify-center border border-gold/25 text-gold-light transition hover:border-gold hover:bg-gold/10"
-              aria-label="YouTube"
-            >
-              <Youtube size={16} />
-            </a>
-            <a
-              href="#"
-              className="flex h-10 w-10 items-center justify-center border border-gold/25 text-gold-light transition hover:border-gold hover:bg-gold/10"
-              aria-label="Contato"
-            >
-              <Send size={16} />
             </a>
           </div>
         </div>
