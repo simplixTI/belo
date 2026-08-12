@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { AudioWave, Ornament, Particles } from './effects'
 
-const CADASTRO_URL = 'https://belosmusic.com.br/rsvp'
+const CADASTRO_URL = 'https://belosmusic.com.br/cadastro'
 
 /* ─────────────────────────── Header ─────────────────────────── */
 
