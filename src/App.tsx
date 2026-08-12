@@ -58,9 +58,6 @@ function Header() {
             </a>
           ))}
         </nav>
-        <a href="#cadastre" className="btn-outline hidden sm:inline-flex">
-          Cadastre-se <ArrowRight size={14} />
-        </a>
       </div>
     </header>
   )
@@ -130,7 +127,12 @@ function Hero() {
             transition={{ duration: 0.9, delay: 0.6 }}
             className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center"
           >
-            <a href="#cadastre" className="btn-gold">
+            <a
+              href={CADASTRO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
               Quero me cadastrar
               <ArrowRight size={16} />
             </a>
