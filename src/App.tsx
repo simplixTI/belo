@@ -27,6 +27,14 @@ function maskPhone(v: string) {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
 }
 
+function maskCPF(v: string) {
+  const d = v.replace(/\D/g, '').slice(0, 11)
+  return d
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+}
+
 /* ─────────────────────────── Header ─────────────────────────── */
 
 function Header() {
@@ -314,7 +322,7 @@ function Services() {
 /* ─────────────────────────── Cadastre-se ─────────────────────────── */
 
 function CadastreSe() {
-  const [form, setForm] = useState({ nome: '', email: '', tel: '' })
+  const [form, setForm] = useState({ nome: '', cpf: '', email: '', tel: '' })
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -327,7 +335,7 @@ function CadastreSe() {
       await fetch(INSCRICAO_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ ...form, cpf: '', origem: 'landing-institucional' }),
+        body: JSON.stringify({ ...form, origem: 'landing-institucional' }),
       })
       setSent(true)
     } catch {
@@ -413,6 +421,34 @@ function CadastreSe() {
                     placeholder="Como você quer ser chamado"
                   />
                 </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="grid gap-2">
+                    <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                      CPF
+                    </label>
+                    <input
+                      className="field"
+                      required
+                      inputMode="numeric"
+                      value={form.cpf}
+                      onChange={(e) => setForm({ ...form, cpf: maskCPF(e.target.value) })}
+                      placeholder="000.000.000-00"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                      WhatsApp
+                    </label>
+                    <input
+                      className="field"
+                      required
+                      inputMode="tel"
+                      value={form.tel}
+                      onChange={(e) => setForm({ ...form, tel: maskPhone(e.target.value) })}
+                      placeholder="(21) 90000-0000"
+                    />
+                  </div>
+                </div>
                 <div className="grid gap-2">
                   <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
                     E-mail
@@ -424,19 +460,6 @@ function CadastreSe() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="seunome@dominio.com"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
-                    WhatsApp
-                  </label>
-                  <input
-                    className="field"
-                    required
-                    inputMode="tel"
-                    value={form.tel}
-                    onChange={(e) => setForm({ ...form, tel: maskPhone(e.target.value) })}
-                    placeholder="(21) 90000-0000"
                   />
                 </div>
                 <button
