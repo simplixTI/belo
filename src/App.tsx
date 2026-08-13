@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   ArrowRight,
@@ -12,10 +12,20 @@ import {
   Star,
   Instagram,
   Pause,
+  Check,
+  Sparkles,
 } from 'lucide-react'
 import { AudioWave, Ornament, Particles } from './effects'
 
-const CADASTRO_URL = 'https://belosmusic.com.br/cadastro'
+const INSCRICAO_ENDPOINT =
+  'https://script.google.com/macros/s/AKfycbzu0jP8TUwZX7PsQmBRJVredrBlrjmVscWUs4JmCMYXdKnZXWrbzT090mk-Q6D32jN6Xw/exec'
+
+function maskPhone(v: string) {
+  const d = v.replace(/\D/g, '').slice(0, 11)
+  if (d.length <= 2) return d
+  if (d.length <= 7) return `(${d.slice(0, 2)}) ${d.slice(2)}`
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
+}
 
 /* ─────────────────────────── Header ─────────────────────────── */
 
@@ -127,12 +137,7 @@ function Hero() {
             transition={{ duration: 0.9, delay: 0.6 }}
             className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center"
           >
-            <a
-              href={CADASTRO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold"
-            >
+            <a href="#cadastre" className="btn-gold">
               Quero me cadastrar
               <ArrowRight size={16} />
             </a>
@@ -309,6 +314,29 @@ function Services() {
 /* ─────────────────────────── Cadastre-se ─────────────────────────── */
 
 function CadastreSe() {
+  const [form, setForm] = useState({ nome: '', email: '', tel: '' })
+  const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault()
+    setError(null)
+    setSubmitting(true)
+    try {
+      await fetch(INSCRICAO_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...form, cpf: '' }),
+      })
+      setSent(true)
+    } catch {
+      setError('Não foi possível enviar seu cadastro. Tente novamente em instantes.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   return (
     <section id="cadastre" className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
       <div className="pointer-events-none absolute inset-0">
@@ -316,22 +344,22 @@ function CadastreSe() {
       </div>
       <Particles density={40} />
 
-      <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-10">
+      <div className="relative mx-auto max-w-3xl px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
+          className="text-center"
         >
           <span className="divider-dot">Cadastre-se</span>
-          <h2 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-light leading-[1.05] text-ivory sm:text-5xl md:text-7xl">
+          <h2 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-light leading-[1.05] text-ivory sm:text-5xl md:text-6xl">
             A próxima estrela
             <br />
             <span className="italic gold-text">pode ser você.</span>
           </h2>
-          <p className="mx-auto mt-8 max-w-2xl font-sans text-lg text-ivory/70 sm:text-xl">
-            Deixe seu cadastro e entre para a rede de artistas da BELO'S MUSIC — descoberta,
-            desenvolvimento de carreira, produção, marketing e distribuição, tudo em um só lugar.
+          <p className="mx-auto mt-6 max-w-xl font-sans text-lg text-ivory/70">
+            Deixe seu cadastro e entre para a rede de artistas da BELO'S MUSIC.
           </p>
         </motion.div>
 
@@ -339,22 +367,93 @@ function CadastreSe() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="mt-14 flex flex-col items-center gap-6"
+          transition={{ duration: 1, delay: 0.15 }}
+          className="relative mt-14"
         >
-          <a
-            href={CADASTRO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-gold"
-            style={{ padding: '1.25rem 2.75rem', fontSize: '0.95rem' }}
-          >
-            Clique aqui e cadastre-se
-            <ArrowRight size={18} />
-          </a>
-          <p className="font-sans text-sm italic text-ivory/50">
-            Cadastro rápido — leva menos de 2 minutos.
-          </p>
+          <div className="absolute -inset-1 bg-gradient-to-b from-gold/40 via-gold/5 to-gold/30 opacity-70 blur-lg" />
+          <div className="glass-strong relative p-6 shadow-gold-lg sm:p-8 md:p-12">
+            <span className="absolute left-4 top-0 -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light sm:left-6">
+              Formulário Oficial
+            </span>
+            <span className="absolute right-4 top-0 hidden -translate-y-1/2 bg-obsidian px-3 font-display text-[10px] uppercase tracking-widest2 text-gold-light sm:right-6 sm:inline">
+              Belo<span className="text-ivory">'</span>s Music
+            </span>
+
+            {sent ? (
+              <div className="flex flex-col items-center gap-5 py-6 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/50 bg-obsidian/60 shadow-gold">
+                  <Check size={26} className="text-gold-light" />
+                </div>
+                <h3 className="font-serif text-3xl leading-tight text-ivory sm:text-4xl">
+                  Cadastro <span className="italic gold-text">recebido.</span>
+                </h3>
+                <p className="max-w-lg font-sans text-lg text-ivory/70">
+                  Obrigado por fazer parte da rede BELO'S MUSIC. Em breve entraremos em contato pelo
+                  e-mail e WhatsApp informados.
+                </p>
+                <div className="mt-2 flex items-center gap-3 text-gold-light">
+                  <Sparkles size={18} />
+                  <span className="font-display text-xs uppercase tracking-widest2">
+                    A próxima estrela pode ser você
+                  </span>
+                  <Sparkles size={18} />
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={submit} className="grid gap-5">
+                <div className="grid gap-2">
+                  <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                    Nome Completo
+                  </label>
+                  <input
+                    className="field"
+                    required
+                    value={form.nome}
+                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                    placeholder="Como você quer ser chamado"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                    E-mail
+                  </label>
+                  <input
+                    className="field"
+                    required
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="seunome@dominio.com"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <label className="font-display text-[10px] uppercase tracking-widest2 text-gold-light/80">
+                    WhatsApp
+                  </label>
+                  <input
+                    className="field"
+                    required
+                    inputMode="tel"
+                    value={form.tel}
+                    onChange={(e) => setForm({ ...form, tel: maskPhone(e.target.value) })}
+                    placeholder="(21) 90000-0000"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-gold mt-4 w-full disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {submitting ? 'Enviando...' : 'Quero me cadastrar'}
+                  {!submitting && <ArrowRight size={16} />}
+                </button>
+                {error && <p className="mt-1 text-center text-sm text-red-400">{error}</p>}
+                <p className="mt-2 text-center text-[11px] italic text-ivory/45">
+                  Ao enviar, você concorda em receber contato por e-mail e WhatsApp.
+                </p>
+              </form>
+            )}
+          </div>
         </motion.div>
       </div>
     </section>
