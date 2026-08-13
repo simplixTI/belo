@@ -327,7 +327,7 @@ function CadastreSe() {
       await fetch(INSCRICAO_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ ...form, cpf: '' }),
+        body: JSON.stringify({ ...form, cpf: '', origem: 'landing-institucional' }),
       })
       setSent(true)
     } catch {
