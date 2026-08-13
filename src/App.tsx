@@ -332,8 +332,12 @@ function CadastreSe() {
     setError(null)
     setSubmitting(true)
     try {
+      // no-cors: Apps Script Web App não retorna cabeçalhos CORS.
+      // Envio funciona (o dado grava no Sheets), mas o browser não consegue
+      // ler a resposta. Assumimos sucesso se o fetch não rejeitou.
       await fetch(INSCRICAO_ENDPOINT, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ ...form, origem: 'landing-institucional' }),
       })
